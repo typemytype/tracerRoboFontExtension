@@ -33,5 +33,12 @@
 	<real>1367572231.009033</real>
 	<key>version</key>
 	<string>1.0</string>
+	<key>com.robofontmechanic.Mechanic</key>
+	<dict>
+		<key>repository</key>
+		<string>typemytype/tracerRoboFontExtension</string>
+		<key>summary</key>
+		<string>Auto trace images.</string>
+	</dict>
 </dict>
 </plist>
