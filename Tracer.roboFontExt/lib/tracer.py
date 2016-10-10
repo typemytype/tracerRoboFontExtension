@@ -273,42 +273,43 @@ def importSVGWithPen(svgPath, outPen, box=None):
 
         paths.beziers(outPen, transform)
 
+
 def saveImageAsBitmap(image, bitmapPath):
     # http://stackoverflow.com/questions/23258596/how-to-save-png-file-from-nsimage-retina-issues-the-right-way
     x, y, maxx, maxy = image.bounds
     width = maxx - x
     height = maxy - y
-    
+
     bitmap = NSBitmapImageRep.alloc().initWithBitmapDataPlanes_pixelsWide_pixelsHigh_bitsPerSample_samplesPerPixel_hasAlpha_isPlanar_colorSpaceName_bitmapFormat_bytesPerRow_bitsPerPixel_(
-        None, # data planes
-        int(width), # pixels wide
-        int(height), # pixels high
-        8, # bits per sample
-        4, # samples per pixel
-        True, # has alpha
-        False, # is planar
-        NSDeviceRGBColorSpace, # color space
-        0, # bitmap format
-        0, # bytes per row 
-        0  # bits per pixel
+        None,  # data planes
+        int(width),  # pixels wide
+        int(height),  # pixels high
+        8,  # bits per sample
+        4,  # samples per pixel
+        True,  # has alpha
+        False,  # is planar
+        NSDeviceRGBColorSpace,  # color space
+        0,  # bitmap format
+        0,  # bytes per row
+        0   # bits per pixel
     )
-    
+
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.setCurrentContext_(NSGraphicsContext.graphicsContextWithBitmapImageRep_(bitmap))
     NSGraphicsContext.currentContext().setShouldAntialias_(True)
-    
+
     NSColor.whiteColor().set()
     NSRectFill(((0, 0), (width, height)))
-    
+
     t = NSAffineTransform.alloc().init()
     t.translateXBy_yBy_(-x, -y)
     t.concat()
 
     image.naked().draw()
-    
+
     NSGraphicsContext.restoreGraphicsState()
-    
-    data = bitmap.representationUsingType_properties_(NSBMPFileType, {NSImageCompressionFactor:1})
+
+    data = bitmap.representationUsingType_properties_(NSBMPFileType, {NSImageCompressionFactor: 1})
     data.writeToFile_atomically_(bitmapPath, True)
 
 
@@ -327,9 +328,9 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
     imagePath = tempfile.mktemp(".bmp")
     bitmapPath = tempfile.mktemp(".pgm")
     svgPath = tempfile.mktemp(".svg")
-    
+
     saveImageAsBitmap(image, imagePath)
-    
+
     cmds = [mkbitmap, "-x", "-t", str(threshold)]
     if blur:
         cmds.extend(["-b", str(blur)])
@@ -358,7 +359,7 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
     glyph.prepareUndo("Tracing")
     importSVGWithPen(svgPath, destGlyph.getPen(), (x, y, w, h))
     glyph.performUndo()
-    
+
     os.remove(imagePath)
     os.remove(svgPath)
 
