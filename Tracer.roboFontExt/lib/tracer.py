@@ -185,7 +185,7 @@ class RelativePen:
         x2, y2 = h2
         x, y = p
         cx, cy = self.currentPoint
-        self._curveTo((cx+x1, cy+y1), (cx+x2, cy+y2), (cx+x, cy+y))
+        self._curveTo((cx + x1, cy + y1), (cx + x2, cy + y2), (cx + x, cy + y))
 
     def _closePath(self):
         self.outPen.closePath()
@@ -212,7 +212,7 @@ class Paths:
     def setInstruction(self, instruction):
         if instruction is None:
             return
-        instruction =  instructions[instruction]
+        instruction = instructions[instruction]
 
         self._currentInstruction = instruction()
         self._segments.append(self._currentInstruction)
@@ -286,6 +286,8 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
     w = maxx - x
     h = maxy - y
 
+    scaleFactor = max([screen.backingScaleFactor() for screen in NSScreen.screens()])
+    print scaleFactor
     newImage = NSImage.alloc().initWithSize_((w, h))
     newImage.lockFocus()
     ctx = NSGraphicsContext.currentContext()
@@ -444,7 +446,7 @@ class TraceWindow(BaseWindowController):
             for contour in self._previewGlyph:
                 for point in contour.points:
                     if point.type != "offCurve":
-                        path.appendBezierPathWithOvalInRect_(NSMakeRect(point.x - dotSize, point.y - dotSize, dotSize * 2, dotSize * 2 ))
+                        path.appendBezierPathWithOvalInRect_(NSMakeRect(point.x - dotSize, point.y - dotSize, dotSize * 2, dotSize * 2))
             drawPath(path)
 
     def _trace(self, glyph):
