@@ -352,7 +352,7 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
     cmds.extend(["-O", str(opttolerance)])
     cmds.extend(["-o", svgPath, bitmapPath])
 
-    log = executeCommand(cmds, shell=True)
+    log = executeCommand(cmds, shell=False)
     if log != ('', ''):
         print log
 
