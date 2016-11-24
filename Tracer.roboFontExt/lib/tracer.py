@@ -29,8 +29,8 @@ from mojo.compile import executeCommand
 potrace = os.path.join(os.path.dirname(__file__), "potrace")
 mkbitmap = os.path.join(os.path.dirname(__file__), "mkbitmap")
 
-# os.chmod(potrace, 0755)
-# os.chmod(mkbitmap, 0755)
+os.chmod(potrace, 0755)
+os.chmod(mkbitmap, 0755)
 
 
 def _getPath(element, path=None, pathItems=None):
