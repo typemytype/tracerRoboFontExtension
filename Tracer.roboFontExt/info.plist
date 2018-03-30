@@ -26,13 +26,13 @@
 	<key>name</key>
 	<string>Tracer</string>
 	<key>requiresVersionMajor</key>
-	<string>1</string>
+	<string>3</string>
 	<key>requiresVersionMinor</key>
-	<string>4</string>
+	<string>0</string>
 	<key>timeStamp</key>
 	<real>1367572231.009033</real>
 	<key>version</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>com.robofontmechanic.Mechanic</key>
 	<dict>
 		<key>repository</key>

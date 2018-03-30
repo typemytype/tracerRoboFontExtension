@@ -29,8 +29,8 @@ from mojo.compile import executeCommand
 potrace = os.path.join(os.path.dirname(__file__), "potrace")
 mkbitmap = os.path.join(os.path.dirname(__file__), "mkbitmap")
 
-os.chmod(potrace, 0755)
-os.chmod(mkbitmap, 0755)
+os.chmod(potrace, 0o0755)
+os.chmod(mkbitmap, 0o0755)
 
 
 def _getPath(element, path=None, pathItems=None):
@@ -301,12 +301,11 @@ def saveImageAsBitmap(image, bitmapPath):
     NSColor.whiteColor().set()
     NSRectFill(((0, 0), (width, height)))
 
-    t = NSAffineTransform.alloc().init()
-    t.translateXBy_yBy_(-x, -y)
-    t.concat()
-
-    image.naked().draw()
-
+    imageData = image.naked().getRepresentation("doodle.CIImageFiltered")
+    if imageData:
+        ciImage, imageRect = imageData
+        ciImage.drawAtPoint_fromRect_operation_fraction_((0, 0), imageRect, NSCompositeSourceOver, 1)
+        
     NSGraphicsContext.restoreGraphicsState()
 
     data = bitmap.representationUsingType_properties_(NSBMPFileType, {NSImageCompressionFactor: 1})
@@ -345,7 +344,7 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
     ])
     log = executeCommand(cmds, shell=True)
     if log != ('', ''):
-        print log
+        print(log)
 
     cmds = [potrace, "-s"]
     cmds.extend(["-t", str(turdsize)])
@@ -354,7 +353,7 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
 
     log = executeCommand(cmds, shell=False)
     if log != ('', ''):
-        print log
+        print(log)
 
     glyph.prepareUndo("Tracing")
     importSVGWithPen(svgPath, destGlyph.getPen(), (x, y, w, h))
