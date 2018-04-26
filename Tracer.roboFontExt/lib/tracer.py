@@ -276,7 +276,8 @@ def importSVGWithPen(svgPath, outPen, box=None):
 
 def saveImageAsBitmap(image, bitmapPath):
     # http://stackoverflow.com/questions/23258596/how-to-save-png-file-from-nsimage-retina-issues-the-right-way
-    x, y, maxx, maxy = image.bounds
+    bounds = image.bounds
+    x, y, maxx, maxy = bounds
     width = maxx - x
     height = maxy - y
 
@@ -305,7 +306,7 @@ def saveImageAsBitmap(image, bitmapPath):
     if imageData:
         ciImage, imageRect = imageData
         ciImage.drawAtPoint_fromRect_operation_fraction_((0, 0), imageRect, NSCompositeSourceOver, 1)
-        
+
     NSGraphicsContext.restoreGraphicsState()
 
     data = bitmap.representationUsingType_properties_(NSBMPFileType, {NSImageCompressionFactor: 1})
@@ -319,6 +320,9 @@ def traceImage(glyph, destGlyph=None, threshold=.2, blur=None, invert=False, tur
         return
     image = glyph.image
     if image is None:
+        return
+    bounds = image.bounds
+    if bounds is None:
         return
     x, y, maxx, maxy = image.bounds
     w = maxx - x
