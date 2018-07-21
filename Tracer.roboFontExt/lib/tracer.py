@@ -437,7 +437,7 @@ class TraceWindow(BaseWindowController):
             if bitmapPath:
                 im = NSImage.alloc().initWithContentsOfFile_(bitmapPath)
                 x, y, maxx, maxy = glyph.image.bounds
-                dest.move((-x, -y))
+                dest.moveBy((-x, -y))
                 self._previewImage = im
                 self._previewGlyph = dest
         self.w.preview.update()
