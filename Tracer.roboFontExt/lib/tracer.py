@@ -10,7 +10,7 @@ from defconAppKit.windows.baseWindow import BaseWindowController
 
 try:
     from mojo.canvas import CanvasGroup
-except:
+except ImportError:
     from mojo.canvas import Canvas
 
     class CanvasGroup(Canvas):
@@ -305,6 +305,12 @@ def saveImageAsBitmap(image, bitmapPath):
     imageData = image.naked().getRepresentation("doodle.CIImageFiltered")
     if imageData:
         ciImage, imageRect = imageData
+        t = NSAffineTransform.alloc().init()
+        t.translateXBy_yBy_(-x, -y)
+        t.concat()
+        t = NSAffineTransform.alloc().init()
+        t.setTransformStruct_(image.transformation)
+        t.concat()
         ciImage.drawAtPoint_fromRect_operation_fraction_((0, 0), imageRect, NSCompositeSourceOver, 1)
 
     NSGraphicsContext.restoreGraphicsState()
