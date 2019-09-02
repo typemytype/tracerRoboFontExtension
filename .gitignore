@@ -7,3 +7,4 @@ __pycache__/
 *.so
 
 test
+.DS_Store
