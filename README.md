@@ -1,3 +1,3 @@
 # Tracer
 
-An autotracer for RoboFont
+An autotracer for RoboFont.
