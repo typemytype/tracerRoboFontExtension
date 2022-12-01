@@ -96,7 +96,7 @@ class TracerWindowController(ezui.WindowController):
             >> . @previewLabel
             >> (...) @previewOptions
 
-        ==============================
+        =---------------------------=
 
         (...) @footerActionButton
         (Finished) @finishedButton
@@ -452,7 +452,6 @@ class TracerWindowController(ezui.WindowController):
         )
 
     def _importSettings(self, path):
-        print(path)
         if not path:
             return
         path = path[0]
@@ -710,7 +709,7 @@ class TracerWindowController(ezui.WindowController):
             self._traceGlyphs(glyphNames)
 
     def destinationTraceAllGlyphsCallback(self, sender):
-        glyphNames = self.w.getItem("glyphsTable").getItems()
+        glyphNames = self.w.getItem("glyphsTable").get()
         if glyphNames:
             self._traceGlyphs(glyphNames)
 

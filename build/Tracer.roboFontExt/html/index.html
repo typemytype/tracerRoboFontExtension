@@ -9,19 +9,73 @@
         </head>
         <body>
         <h1>Tracer</h1>
-<p>An autotracer for RoboFont.</p>
-<h2 id="trace-settings">Trace Settings</h2>
-<p>https://www.drawbot.com/content/shapes/bezierPath.html#drawBot.context.baseContext.BezierPath.traceImage
-https://potrace.sourceforge.net</p>
-<h2 id="simplify-settings">Simplify Settings</h2>
+<p>This tool lets you autotrace the images assigned to glyphs.
+It applies several simplification algorithms to reduce the
+complexity of the traced outlines.</p>
+<h2 id="trace">Trace</h2>
+<ul>
+<li>Threshold: The value to be used when converting the image
+  to a black and white bitmap.</li>
+<li>Tolerance: The tracing accuracy tolerance. A higher number
+  will result in less accuracy.</li>
+<li>Turd Size: Suppress speckles (aka turds) below this size.</li>
+<li>Blur: The amount to blur the image before converting
+  to a black and white bitmap.</li>
+</ul>
+<p>Tracer uses the (autotracing implementation in DrawBot)
+[https://www.drawbot.com/content/shapes/bezierPath.html#drawBot.context.baseContext.BezierPath.traceImage].
+DrawBot uses (Potrace)[https://potrace.sourceforge.net].
+So for complete documentation on trace settings, refer to
+these links.</p>
+<h2 id="simplify">Simplify</h2>
+<ul>
+<li>Segment Count: Contours with fewer segments than this
+  number will be discarded.</li>
+<li>Small Curves: Curves shorter than this number will be
+  converted to lines.</li>
+<li>Small Contours: Contours with an area smaller than this
+  number will be discarded.</li>
+<li>Douglas Peucker: Apply the (Ramer–Douglas–Peucker)[https://en.wikipedia.org/wiki/Ramer–Douglas–Peucker_algorithm]
+  algorithm.</li>
+<li>Visvalingam Whyatt: Apply the (Visvalingam Whyatt)[https://en.wikipedia.org/wiki/Visvalingam–Whyatt_algorithm]
+  algorithm.</li>
+<li>Shallow Curves: Convert curves with a curve length
+  that is similar to a line from the same on curve
+  points to a line.</li>
+<li>Spikes: Remove those spiky points that autotracing
+  is notorious for producing. Well, try to remove
+  them at least.</li>
+<li>Remove Overlapping Points: Remove overlapping points.</li>
+</ul>
+<p>If you don't want any simplification, set all of the values
+to zero.</p>
+<h2 id="destination">Destination</h2>
+<ul>
+<li>Layer: The name of the layer the trace should be
+  stored in. If the given name doesn't exist, a new
+  layer will be created.</li>
+<li>Trace Selected Glyphs: Trace the glyphs selected
+  in the list.</li>
+<li>Trace All Glyphs: Trace all of the glyphs in the list.</li>
+</ul>
+<h2 id="preview">Preview</h2>
+<p>This gives you a preview of tracing with the input settings.
+The button below will let you customize what you are seeing.</p>
 <h2 id="scripting">Scripting</h2>
+<p>The internals of this extension are accessible via Python.
+You can get the documentation for the various functions
+and classes by getting the docstrings from these.</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">tracer</span>
+
 <span class="n">tracer</span><span class="o">.</span><span class="n">traceGlyphImage</span>
 <span class="n">tracer</span><span class="o">.</span><span class="n">simplifyGlyphContours</span>
 <span class="n">tracer</span><span class="o">.</span><span class="n">countGlyphPoints</span>
 <span class="n">tracer</span><span class="o">.</span><span class="n">SimplifyContoursPen</span>
 <span class="n">tracer</span><span class="o">.</span><span class="n">CountPen</span>
 </code></pre></div>
+
+
+<p>You can also look at the source code.</p>
         </body>
         </html>
         
