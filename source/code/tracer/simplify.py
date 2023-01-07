@@ -1,9 +1,10 @@
 import pprint
 import math
-from fontTools.misc.bezierTools import calcCubicArcLength
+from fontTools.misc.bezierTools import approximateCubicArcLength, calcCubicArcLength
 from fontTools.pens.basePen import AbstractPen
 from fontTools.pens.filterPen import ContourFilterPen
 from fontTools.pens.recordingPen import RecordingPen, replayRecording
+from fontTools.pens.boundsPen import BoundsPen
 from fontTools.pens.areaPen import AreaPen
 from fontTools.pens.roundingPen import RoundingPen
 from simplification.cutil import simplify_coords as applyDouglasPeucker
@@ -344,6 +345,23 @@ def filterContourAreas(contour, minArea=defaultMinimumContourArea):
     >>> recordingPen.value == expected
     True
     """
+    # first do a simple bounds calculation.
+    # if the area is less than the minimum
+    # the more complex aarea calculation
+    # doesn't need to be done because
+    # the result of that can't be larger
+    # than the bounds area.
+    boundsPen = BoundsPen(None)
+    replayRecording(contour, boundsPen)
+    if boundsPen.bounds is None:
+        return []
+    xMin, yMin, xMax, yMax = boundsPen.bounds
+    boundsWidth = xMax - xMin
+    boundsHeight = yMax - yMin
+    boundsArea = boundsWidth * boundsHeight
+    if boundsArea < minArea:
+        return []
+    # now do the more complex area calculation
     areaPen = AreaPen()
     replayRecording(contour, areaPen)
     if abs(areaPen.value) < minArea:
@@ -392,11 +410,22 @@ def filterCurveLengths(contour, minimumCurveLength=defaultMinimumCurveLength):
             pt1 = operands[0]
             pt2 = operands[1]
             pt3 = operands[2]
-            curveLength = calcCubicArcLength(prevPt, pt1, pt2, pt3)
-            if curveLength < minimumCurveLength:
-                filtered.append(("lineTo", (pt3,)))
-            else:
+            # if the length of prevPt - pt3
+            # is greater than the minimum,
+            # the curve length calculations
+            # don't need to be done because
+            # the curve can't be shorter than
+            # the line length.
+            lineLength = calcLineLength(prevPt, pt3)
+            if lineLength > minimumCurveLength:
                 filtered.append((operator, operands))
+            else:
+                # approximation is good enough here
+                curveLength = approximateCubicArcLength(prevPt, pt1, pt2, pt3)
+                if curveLength < minimumCurveLength:
+                    filtered.append(("lineTo", (pt3,)))
+                else:
+                    filtered.append((operator, operands))
             prevPt = pt3
         else:
             filtered.append((operator, operands))
