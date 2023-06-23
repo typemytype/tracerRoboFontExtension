@@ -6,7 +6,7 @@ name = "Tracer"
 version = "2.0"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
-roboFontVersion = "4.4"
+roboFontVersion = "4.4b"
 pycOnly = False
 menuItems = [
 	dict(
