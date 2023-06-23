@@ -14,9 +14,8 @@ complexity of the traced outlines.
 - Blur: The amount to blur the image before converting
   to a black and white bitmap.
 
-Tracer uses the (autotracing implementation in DrawBot)
-[https://www.drawbot.com/content/shapes/bezierPath.html#drawBot.context.baseContext.BezierPath.traceImage].
-DrawBot uses (Potrace)[https://potrace.sourceforge.net].
+Tracer uses the [autotracing implementation in DrawBot](https://www.drawbot.com/content/shapes/bezierPath.html#drawBot.context.baseContext.BezierPath.traceImage).
+DrawBot uses [Potrace](https://potrace.sourceforge.net).
 So for complete documentation on trace settings, refer to
 these links.
 
@@ -28,9 +27,9 @@ these links.
   converted to lines.
 - Small Contours: Contours with an area smaller than this
   number will be discarded.
-- Douglas Peucker: Apply the (Ramer–Douglas–Peucker)[https://en.wikipedia.org/wiki/Ramer–Douglas–Peucker_algorithm]
+- Douglas Peucker: Apply the [Ramer–Douglas–Peucker](https://en.wikipedia.org/wiki/Ramer–Douglas–Peucker_algorithm)
   algorithm.
-- Visvalingam Whyatt: Apply the (Visvalingam Whyatt)[https://en.wikipedia.org/wiki/Visvalingam–Whyatt_algorithm]
+- Visvalingam Whyatt: Apply the [Visvalingam Whyatt](https://en.wikipedia.org/wiki/Visvalingam–Whyatt_algorithm)
   algorithm.
 - Shallow Curves: Convert curves with a curve length
   that is similar to a line from the same on curve
