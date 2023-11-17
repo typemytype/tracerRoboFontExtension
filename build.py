@@ -3,7 +3,7 @@ import os
 from mojo.extensions import ExtensionBundle
 
 name = "Tracer"
-version = "2.0"
+version = "2.1"
 developer = "Type Supply"
 developerURL = "http://typesupply.com"
 roboFontVersion = "4.4b"

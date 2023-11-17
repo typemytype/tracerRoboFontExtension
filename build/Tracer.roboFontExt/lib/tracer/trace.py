@@ -1,5 +1,7 @@
 import pathlib
 import tempfile
+from fontTools.misc import transform
+from fontTools.pens.transformPen import TransformPointPen
 import AppKit
 import drawBot as bot
 
@@ -19,6 +21,10 @@ def traceGlyphImage(
         return
     data = AppKit.NSData.dataWithBytes_length_(imageData, len(imageData))
     image = AppKit.NSImage.alloc().initWithData_(data)
+    rep = AppKit.NSBitmapImageRep.imageRepWithData_(data)
+    pixelWidth = rep.pixelsWide()
+    imageWidth, imageHeight = image.size()
+    imageScale = pixelWidth / imageWidth
     image = bot.ImageObject(image)
     tracer = bot.BezierPath()
     tracer.traceImage(
@@ -29,5 +35,7 @@ def traceGlyphImage(
         turd=turdSize,
         tolerance=tolerance
     )
-    pointPen = destinationGlyph.getPointPen()
-    tracer.drawToPointPen(pointPen)
+    imageTransform = transform.Scale(imageScale)
+    outPointPen = destinationGlyph.getPointPen()
+    transformPointPen = TransformPointPen(outPointPen, imageTransform)
+    tracer.drawToPointPen(transformPointPen)

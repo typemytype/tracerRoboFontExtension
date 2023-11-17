@@ -734,7 +734,7 @@ class TracerWindowController(ezui.WindowController):
                 with destinationGlyph.holdChanges():
                     destinationGlyph.unicodes = imageGlyph.unicodes
                     self._traceGlyph(imageGlyph, destinationGlyph)
-                    self._simplifyGlyph(imageGlyph, None)
+                    self._simplifyGlyph(destinationGlyph, None)
                 progressBar.increment()
         finally:
             progressBar.close()
