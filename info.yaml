@@ -1,0 +1,13 @@
+name: Tracer
+developer: Type Supply
+developerURL: http://typesupply.com
+launchAtStartUp: true
+mainScript: launch.py
+version: '2.1'
+addToMenu:
+- path: menu_openFontWindow.py
+  preferredName: Window
+  shortKey: ''
+html: true
+requiresVersionMajor: '4'
+requiresVersionMinor: 4b
