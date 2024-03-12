@@ -8,6 +8,5 @@ addToMenu:
 - path: menu_openFontWindow.py
   preferredName: Window
   shortKey: ''
-html: true
 requiresVersionMajor: '4'
 requiresVersionMinor: 4b
